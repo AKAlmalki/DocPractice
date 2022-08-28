@@ -352,7 +352,7 @@ Otherwise, create a new book and add it to the list.
 
 ```
 ### PATCH /books/{book_id}
-- Description: update the rating of an existing book object with the attribute from the JSON request body called `rating`.
+- Description: update the rating of an existing book object with the attribute value from the JSON request body called `rating`.
 - `book_id`: `request argument` that indicates the book id with the type `int`.
 #### JSON Response body (Delete an existing book)
 ```bash

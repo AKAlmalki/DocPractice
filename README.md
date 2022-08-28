@@ -137,3 +137,138 @@ In our API, uses conventional JSON objects to indicate the success or failure of
 }
 ```
 
+### POST /books
+- Description: create a new book object or search for exisiting one using the title based on a condition.
+
+#### Condition:
+if JSON request body have an attribute `search`, then *search* for an exisiting book by title (case-insensitive and partial search).
+
+#### JSON Response body (Search for a book by title)
+```bash
+{
+  "success": True,
+  "books": current_books,
+  "total_books": len(selection.all()),
+}
+```
+
+#### Attributes
++ `success`: indicate the success or failure of the request.
++ `books`: paginated books list that is ordered by id.
++ `total_books`: the number of current books.
+
+
+Otherwise, create a new book and add it to the list.
+
+#### JSON Response body (Create a new book)
+```bash
+{
+  "success": True,
+  "created": book.id,
+  "books": current_books,
+  "total_books": len(Book.query.all()),
+}
+```
+
+#### Attributes
++ `success`: indicate the success or failure of the request.
++ `created`: indicate the id of the created book.
++ `books`: paginated books list that is ordered by id.
++ `total_books`: the number of current books.
+
+#### Sample: Create a new book
+- `curl http://127.0.0.1:5000/books -X POST -H "Content-Type: application/json" -d '{"title":"Not Any Where", "author":"Steve John", "rating":"5"}'`
+```bash
+{
+  "books": [
+    {
+      "author": "Stephen King",
+      "id": 1,
+      "rating": 5,
+      "title": "The Outsider: A Novel"
+    },
+    {
+      "author": "Lisa Halliday",
+      "id": 2,
+      "rating": 4,
+      "title": "Asymmetry: A Novel"
+    },
+    {
+      "author": "Kristin Hannah",
+      "id": 3,
+      "rating": 4,
+      "title": "The Great Alone"
+    },
+    {
+      "author": "Tara Westover",
+      "id": 4,
+      "rating": 5,
+      "title": "Educated: A Memoir"
+    },
+    {
+      "author": "Jojo Moyes",
+      "id": 5,
+      "rating": 5,
+      "title": "Still Me: A Novel"
+    },
+    {
+      "author": "Leila Slimani",
+      "id": 6,
+      "rating": 2,
+      "title": "Lullaby"
+    },
+    {
+      "author": "Amitava Kumar",
+      "id": 7,
+      "rating": 5,
+      "title": "Immigrant, Montana"
+    },
+    {
+      "author": "Madeline Miller",
+      "id": 8,
+      "rating": 5,
+      "title": "CIRCE"
+    }
+  ],
+  "created": 23,
+  "success": true,
+  "total_books": 17
+}
+
+```
+#### Sample-1: Search for an existing book by title
+- `curl http://127.0.0.1:5000/books -X POST -H "Content-Type: application/json" -d '{"title":"Not Any Where", "author":"Steve John", "rating":"5"}'`
+```bash
+{
+  "books": [
+    {
+      "author": "Steve John",
+      "id": 23,
+      "rating": 5,
+      "title": "Not Any Where"
+    }
+  ],
+  "success": true,
+  "total_books": 1
+}
+
+```
+#### Sample-2: Search for an existing book by title (by writing part of the title)
+- `curl http://127.0.0.1:5000/books -X POST -H "Content-Type: application/json" -d '{"title":"not", "author":"Steve John", "rating":"5"}'`
+```bash
+{
+  "books": [
+    {
+      "author": "Steve John",
+      "id": 23,
+      "rating": 5,
+      "title": "Not Any Where"
+    }
+  ],
+  "success": true,
+  "total_books": 1
+}
+
+```
+
+

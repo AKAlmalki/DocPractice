@@ -76,7 +76,7 @@ In our API, uses conventional JSON objects to indicate the success or failure of
 ```
 #### Attributes
 + `success`: indicate the success or failure of the request.
-+ `books`: paginated books list that is ordered by id.
++ `books`: paginated books list that is ordered by id (groups of 8).
 + `total_books`: the number of current books.
 
 #### Sample `curl http://127.0.0.1:5000/books`
@@ -154,7 +154,7 @@ if JSON request body have an attribute `search`, then *search* for an exisiting 
 
 #### Attributes
 + `success`: indicate the success or failure of the request.
-+ `books`: paginated books list that is ordered by id.
++ `books`: paginated books list that is ordered by id (groups of 8).
 + `total_books`: the number of current books.
 
 
@@ -173,7 +173,7 @@ Otherwise, create a new book and add it to the list.
 #### Attributes
 + `success`: indicate the success or failure of the request.
 + `created`: indicate the id of the created book.
-+ `books`: paginated books list that is ordered by id.
++ `books`: paginated books list that is ordered by id (groups of 8).
 + `total_books`: the number of current books.
 
 #### Sample: Create a new book
@@ -271,4 +271,84 @@ Otherwise, create a new book and add it to the list.
 
 ```
 
+
+### DELETE /books/{book_id}
+- Description: delete an existing book object based on the id.
+- `book_id`: `request argument` that indicates the book id with the type `int`.
+#### JSON Response body (Delete an existing book)
+```bash
+{
+  "success": True,
+  "deleted": book.id,
+  "books": current_books,
+  "total_books": len(Book.query.all()),
+}
+```
+
+#### Attributes
++ `success`: indicate the success or failure of the request.
++ `deleted`: indicate the id of the deleted book.
++ `books`: paginated books list that is ordered by id (groups of 8).
++ `total_books`: the number of current books.
+
+#### Sample: Delete an existing book
+- `curl http://127.0.0.1:5000/books/23 -X DELETE`
+```bash
+{
+  "books": [
+    {
+      "author": "Stephen King",
+      "id": 1,
+      "rating": 5,
+      "title": "The Outsider: A Novel"
+    },
+    {
+      "author": "Lisa Halliday",
+      "id": 2,
+      "rating": 4,
+      "title": "Asymmetry: A Novel"
+    },
+    {
+      "author": "Kristin Hannah",
+      "id": 3,
+      "rating": 4,
+      "title": "The Great Alone"
+    },
+    {
+      "author": "Tara Westover",
+      "id": 4,
+      "rating": 5,
+      "title": "Educated: A Memoir"
+    },
+    {
+      "author": "Jojo Moyes",
+      "id": 5,
+      "rating": 5,
+      "title": "Still Me: A Novel"
+    },
+    {
+      "author": "Leila Slimani",
+      "id": 6,
+      "rating": 2,
+      "title": "Lullaby"
+    },
+    {
+      "author": "Amitava Kumar",
+      "id": 7,
+      "rating": 5,
+      "title": "Immigrant, Montana"
+    },
+    {
+      "author": "Madeline Miller",
+      "id": 8,
+      "rating": 5,
+      "title": "CIRCE"
+    }
+  ],
+  "deleted": 23,
+  "success": true,
+  "total_books": 16
+}
+
+```
 

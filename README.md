@@ -357,8 +357,8 @@ Otherwise, create a new book and add it to the list.
 #### JSON Response body (Delete an existing book)
 ```bash
 {
-  "success": True,
   "id": book.id,
+  "success": True,
 }
 ```
 

@@ -61,10 +61,79 @@ In our API, uses conventional JSON objects to indicate the success or failure of
 
 
 ## Endpoint Library
-Now, add an Endpoint Library section to your documentation. Make sure that endpoints, methods and returned data are all clear. Consider including sample requests for clarity
 
-- Organized by resource
-- Include each endpoint
-- Sample request 
-- Arguments including data types
-- Response object including status codes and data types 
+### GET /books
+- Description: retrieve all the books ordered by id.
+- Results are paginated in groups of 8, include a request argument to choose page number (start from 1)
+
+#### JSON Response body
+```bash
+{
+  "success": True,
+  "books": current_books,
+  "total_books": len(Book.query.all()),
+}
+```
+#### Attributes
++ `success`: indicate the success or failure of the request.
++ `books`: paginated books list that is ordered by id.
++ `total_books`: the number of current books.
+
+#### Sample `curl http://127.0.0.1:5000/books`
+```bash
+{
+  "books": [
+    {
+      "author": "Stephen King",
+      "id": 1,
+      "rating": 5,
+      "title": "The Outsider: A Novel"
+    },
+    {
+      "author": "Lisa Halliday",
+      "id": 2,
+      "rating": 4,
+      "title": "Asymmetry: A Novel"
+    },
+    {
+      "author": "Kristin Hannah",
+      "id": 3,
+      "rating": 4,
+      "title": "The Great Alone"
+    },
+    {
+      "author": "Tara Westover",
+      "id": 4,
+      "rating": 5,
+      "title": "Educated: A Memoir"
+    },
+    {
+      "author": "Jojo Moyes",
+      "id": 5,
+      "rating": 5,
+      "title": "Still Me: A Novel"
+    },
+    {
+      "author": "Leila Slimani",
+      "id": 6,
+      "rating": 2,
+      "title": "Lullaby"
+    },
+    {
+      "author": "Amitava Kumar",
+      "id": 7,
+      "rating": 5,
+      "title": "Immigrant, Montana"
+    },
+    {
+      "author": "Madeline Miller",
+      "id": 8,
+      "rating": 5,
+      "title": "CIRCE"
+    }
+  ],
+  "success": true,
+  "total_books": 16
+}
+```
+

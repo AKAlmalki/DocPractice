@@ -351,4 +351,27 @@ Otherwise, create a new book and add it to the list.
 }
 
 ```
+### PATCH /books/{book_id}
+- Description: update the rating of an existing book object with the attribute from the JSON request body called `rating`.
+- `book_id`: `request argument` that indicates the book id with the type `int`.
+#### JSON Response body (Delete an existing book)
+```bash
+{
+  "success": True,
+  "id": book.id,
+}
+```
+
+#### Attributes
++ `success`: indicate the success or failure of the request.
++ `id`: indicate the id of the updated book.
+
+#### Sample: Update an existing book with the id 15
+- `curl http://127.0.0.1:5000/books/15 -X PATCH -H "Content-Type: application/json" -d '{"rating":"1"}'`
+```bash
+{
+  "id": 15,
+  "success": true
+}
+```
 
